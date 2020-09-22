@@ -28,6 +28,6 @@ class Product(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
 
 
-
 contract_id = 'some_id'
-manufacturers_by_id_contract = Manufacturer.objects.filter(product__loan_application__contract=contract_id).distinct()
+manufacturer_ids = LoanApplication.objects.filter(contract=contract_id).values('product__manufacturer').distinct()
+manufacturers_by_id_contract = Manufacturer.objects.filter(id__in=manufacturer_ids)
